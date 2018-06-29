@@ -1,27 +1,51 @@
-version: "2.0"
-services: 
-  keepalive:
-    image: osixia/keepalived:1.4.5
-    container_name: keepalived
-    environment:
-      - KEEPALIVED_INTERFACE="enp0s3"
-      - KEEPALIVED_VIRTUAL_IPS="192.168.1.10"
-      - KEEPALIVED_PRIORITY =150
-      - KEEPALIVED_UNICAST_PEERS="192.168.1.42"
-      - KEEPALIVED_COMMAND_LINE_ARGUMENTS=""
-    network_mode: host
+version: '2'
 
-#  nginx:
-#    image: nginx:1.14.0
-#    container_name: nginx
+services: 
+#  keepalive:
+#    image: osixia/keepalived:1.4.5
+#    container_name: keepalived
+#    environment:
+#      - KEEPALIVED_INTERFACE="enp0s3"
+#      - KEEPALIVED_VIRTUAL_IPS="192.168.1.10"
+#      - KEEPALIVED_PRIORITY =150
+#      - KEEPALIVED_UNICAST_PEERS="192.168.1.42"
+#      - KEEPALIVED_COMMAND_LINE_ARGUMENTS=""
 #    network_mode: host
 
+  nginx:
+    image: nginx:1.14.0
+    #build:
+    #    context: dockerfile/nginx
+    container_name: nginx
+    volumes:
+        - ${PWD}/conf/nginx/:/etc/nginx/
+        - ${PWD}/swi:/opt
+    network_mode: host
+    
 
 #  elk:
-#    image: sebp/elk:630
+#    build:
+#        context: dockerfile/elasticsearch 
 #    container_name: elk
 #    network_mode: host
+#    volumes:
+#      - ${PWD}/conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+#      - ${PWD}/conf/elasticsearch/data:/usr/share/elasticsearch/data
+#    environment:
+#      ES_JAVA_OPTS: "-Xmx1024m -Xms1024m"
+#
 
+
+#  logstash:
+#    build: 
+#      context: dockerfile/logstash      
+#    container_name: logstash
+#    network_mode: host
+#    volumes:
+#      - ${PWD}/conf/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+#      - ${PWD}/conf/logstash/pipeline:/usr/share/logstash/pipeline:ro
+#    environment:
+#      LS_JAVA_OPTS: "-Xmx1024m -Xms1024m"
 #  mars:
 #    image: mars:1.13.1
 #    container_name: mars
