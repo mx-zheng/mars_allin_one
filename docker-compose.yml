@@ -23,29 +23,31 @@ services:
     network_mode: host
     
 
-#  elk:
-#    build:
-#        context: dockerfile/elasticsearch 
-#    container_name: elk
-#    network_mode: host
-#    volumes:
-#      - ${PWD}/conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-#      - ${PWD}/conf/elasticsearch/data:/usr/share/elasticsearch/data
-#    environment:
-#      ES_JAVA_OPTS: "-Xmx1024m -Xms1024m"
-#
+  elk:
+    build:
+        context: dockerfile/elasticsearch 
+    container_name: elk
+    network_mode: host
+    volumes:
+      - ${PWD}/conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ${PWD}/conf/elasticsearch/data:/usr/share/elasticsearch/data
+    environment:
+      ES_JAVA_OPTS: "-Xmx1024m -Xms1024m"
 
 
-#  logstash:
-#    build: 
-#      context: dockerfile/logstash      
-#    container_name: logstash
-#    network_mode: host
-#    volumes:
-#      - ${PWD}/conf/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-#      - ${PWD}/conf/logstash/pipeline:/usr/share/logstash/pipeline:ro
-#    environment:
-#      LS_JAVA_OPTS: "-Xmx1024m -Xms1024m"
+
+  logstash:
+    build: 
+      context: dockerfile/logstash      
+    container_name: logstash
+    network_mode: host
+    volumes:
+      - ${PWD}/conf/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ${PWD}/conf/logstash/pipeline:/usr/share/logstash/pipeline:ro
+    environment:
+      LS_JAVA_OPTS: "-Xmx1024m -Xms1024m"
+    depends_on:
+      - elk
 #  mars:
 #    image: mars:1.13.1
 #    container_name: mars
