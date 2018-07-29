@@ -14,41 +14,93 @@ services:
 
   nginx:
     image: nginx:1.14.0
-    #build:
-    #    context: dockerfile/nginx
+    build:
+        context: dockerfile/nginx
     container_name: nginx
+    expose: 
+      - "443/tcp"      
+      - "80/tcp"
+    ports:
+      - 80:80
+      - 443:443
     volumes:
         - ${PWD}/conf/nginx/:/etc/nginx/
         - ${PWD}/swi:/opt
-    network_mode: host
+    depends_on:
+      - mars
+    #network_mode: host
+    networks:
+      mars_net:
+          ipv4_address: 10.1.1.2
+    links:
+      - mars
     
 
-  elk:
+  elasticsearch:
     build:
         context: dockerfile/elasticsearch 
-    container_name: elk
-    network_mode: host
-    volumes:
-      - ${PWD}/conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      - ${PWD}/conf/elasticsearch/data:/usr/share/elasticsearch/data
+    container_name: elasticsearch
+    #network_mode: host
+    networks:
+      mars_net:
+          ipv4_address: 10.1.1.4    
+    #ports:
+    #  - 9200:19200
+    #volumes:
+      #- ${PWD}/conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      #- ${PWD}/conf/elasticsearch/data:/usr/share/elasticsearch/data:rw
     environment:
       ES_JAVA_OPTS: "-Xmx1024m -Xms1024m"
-
+      network.host: "0.0.0.0"
+      network.publish_host: "10.1.1.4"
+      cluster.name: "marcluster"
+      node.name: "es1"
 
 
   logstash:
     build: 
       context: dockerfile/logstash      
     container_name: logstash
-    network_mode: host
+    privileged: true
+    expose:
+       - "5514/udp"
+       - "6343/tcp"
+       - "6343/udp"
+       - "25826/udp"
+    #network_mode: host
+    networks:
+      mars_net:
+          ipv4_address: 10.1.1.5
+    links:
+      - elasticsearch
     volumes:
       - ${PWD}/conf/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ${PWD}/conf/logstash/pipeline:/usr/share/logstash/pipeline:ro
     environment:
-      LS_JAVA_OPTS: "-Xmx1024m -Xms1024m"
+      LS_JAVA_OPTS: "-Xmx2g -Xms2g"
     depends_on:
-      - elk
-#  mars:
-#    image: mars:1.13.1
-#    container_name: mars
-#    network_mode: host
+      - elasticsearch
+
+  mars:
+    image: mars:1.0.0.1
+    container_name: mars
+    #network_mode: host
+    networks:
+        mars_net:
+          ipv4_address: 10.1.1.3
+    links:
+      - elasticsearch
+    volumes:
+      - ${PWD}/conf/mars/modules:/etc/collectd/modules
+      - ${PWD}/conf/mars/mars_collectd.conf:/etc/collectd/collectd.conf
+    depends_on:
+      - elasticsearch
+
+networks:
+   mars_net:
+     driver: bridge
+     ipam:
+       driver: default
+       config:
+       - subnet: 10.1.1.0/24
+         gateway: 10.1.1.254
