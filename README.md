@@ -6,3 +6,5 @@ docker-compose  operation:
 
 NOTE: ElasticSearch need do "sudo sysctl -w vm.max_map_count=262144" on host.
 
+NOTE: elasticsearch only bind localhost, if you want to access from Internet, you shall change network.bind_host="0.0.0.0"
+
