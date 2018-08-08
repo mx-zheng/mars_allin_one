@@ -93,7 +93,7 @@ services:
     network_mode: host
     privileged: true
     environment:
-      MGMT_IP: 192.168.200.65
+      ONOS_IP: 192.168.200.65
     #ports: 
     #   - 8101:8101/tcp
     #   - 8181:8181/tcp
