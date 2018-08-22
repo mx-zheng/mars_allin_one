@@ -1,0 +1,11 @@
+#!/bin/sh
+if [ $# -eq 0 ] || [ $# -gt 1 ]
+then
+  echo "please give one IP address"
+  exit
+fi
+
+echo "repplace HOST_IP_TO_ONOS_IP by $1"
+sed -i 's/HOST_IP_TO_ONOS_IP/'"$1"'/g' conf/mars/mars_collectd.conf
+sed -i 's/HOST_IP_TO_ONOS_IP/'"$1"'/g' conf/elasticsearch/elasticsearch.yml
+sed -i 's/HOST_IP_TO_ONOS_IP/'"$1"'/g' docker-compose.yml
