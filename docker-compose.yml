@@ -18,8 +18,8 @@ services:
         context: dockerfile/nginx
     container_name: nginx
     volumes:
-        - ${PWD}/conf/nginx/:/etc/nginx/
-        - ${PWD}/swi:/opt
+        - ./conf/nginx/:/etc/nginx/
+        - ./swi:/opt/
     depends_on:
       - mars
     network_mode: host
@@ -31,8 +31,8 @@ services:
     privileged: true
     network_mode: host
     #volumes:
-      #- ${PWD}/conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      #- ${PWD}/conf/elasticsearch/data:/usr/share/elasticsearch/data:rw
+      #- ./conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      #- ./conf/elasticsearch/data:/usr/share/elasticsearch/data:rw
     environment:
       ES_JAVA_OPTS: "-Xmx1024m -Xms1024m"
       network.bind_host: "127.0.0.1"
@@ -48,8 +48,8 @@ services:
     privileged: true
     network_mode: host
     volumes:
-      - ${PWD}/conf/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ${PWD}/conf/logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./conf/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./conf/logstash/pipeline:/usr/share/logstash/pipeline:ro
     environment:
       LS_JAVA_OPTS: "-Xmx2g -Xms2g"
     depends_on:
@@ -61,10 +61,11 @@ services:
     network_mode: host
     privileged: true
     environment:
-      ONOS_IP: HOST_IP_TO_ONOS_IP
+      ONOS_IP: 192.168.1.45
     volumes:
-      - ${PWD}/conf/mars/modules:/etc/collectd/modules
-      - ${PWD}/conf/mars/mars_collectd.conf:/etc/collectd/collectd.conf
+      - ./conf/mars/modules:/etc/collectd/modules
+      - ./conf/mars/mars_collectd.conf:/etc/collectd/collectd.conf
+      - ./download:/root/onos/download
     depends_on:
       - elasticsearch
 
