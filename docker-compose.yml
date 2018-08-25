@@ -20,6 +20,7 @@ services:
     volumes:
         - ./conf/nginx/:/etc/nginx/
         - ./swi:/opt/
+        - ./download:/opt/download
     depends_on:
       - mars
     network_mode: host
@@ -68,4 +69,3 @@ services:
       - ./download:/root/onos/download
     depends_on:
       - elasticsearch
-
