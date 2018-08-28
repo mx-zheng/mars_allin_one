@@ -37,7 +37,7 @@ services:
     environment:
       ES_JAVA_OPTS: "-Xmx1024m -Xms1024m"
       network.bind_host: "127.0.0.1"
-      network.publish_host: "192.168.200.65"
+      network.publish_host: "HOST_IP_TO_ONOS_IP"
       cluster.name: "marscluster"
       node.name: "es1"
 
@@ -62,7 +62,7 @@ services:
     network_mode: host
     privileged: true
     environment:
-      ONOS_IP: 192.168.1.45
+      ONOS_IP: HOST_IP_TO_ONOS_IP
     volumes:
       - ./conf/mars/modules:/etc/collectd/modules
       - ./conf/mars/mars_collectd.conf:/etc/collectd/collectd.conf
