@@ -1,0 +1,6 @@
+curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:9200/_search  -d '{"query":{"match_all":{}}}'
+
+curl -XGET http://127.0.0.1:9200/_cat/indices?v
+
+curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:9200/_search  --data "@/home/manager/elastic_search_cpu.json"
+

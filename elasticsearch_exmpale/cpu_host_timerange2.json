@@ -1,0 +1,18 @@
+{
+"query":{
+   "bool":{
+      "must": [
+        {"match":{"plugin":"cpu"}},
+        {"match":{"collectd_type":"percent"}},
+        {"match":{"host":"192.168.200.31"}},
+        {"range":{ "@timestamp":{
+                 "gte":"2001-01-01",
+                 "lte": "2001-01-02"
+             }
+           }
+        }
+      ]
+   }
+},
+"size":1000
+}
