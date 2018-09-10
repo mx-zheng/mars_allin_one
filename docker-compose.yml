@@ -21,6 +21,7 @@ services:
         - ./conf/nginx/:/etc/nginx/
         - ./swi:/opt/
         - ./download:/opt/download
+        - ./public:/opt/public
     depends_on:
       - mars
     network_mode: host
