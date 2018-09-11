@@ -1,4 +1,5 @@
 curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:9200/_search  -d '{"query":{"match_all":{}}}'
+curl -XDELETE http://127.0.0.1:9200/portstats
 
 curl -XGET http://127.0.0.1:9200/_cat/indices?v
 
