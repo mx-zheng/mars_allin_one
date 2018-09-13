@@ -5,3 +5,4 @@ curl -XGET http://127.0.0.1:9200/_cat/indices?v
 
 curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:9200/_search  --data "@/home/manager/elastic_search_cpu.json"
 
+curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:9200/logstash/_mapping/doc/ -d '{"properties":{"type_instance":{"type":"text","fielddata":true}}}'
