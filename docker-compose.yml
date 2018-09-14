@@ -32,15 +32,16 @@ services:
     container_name: elasticsearch
     privileged: true
     network_mode: host
-    #volumes:
-      #- ./conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      #- ./conf/elasticsearch/data:/usr/share/elasticsearch/data:rw
+    volumes:
+      - ./conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./conf/elasticsearch/backup:/mnt/backup:rw
+      - ./conf/elasticsearch/data:/usr/share/elasticsearch/data:rw
     environment:
       ES_JAVA_OPTS: "-Xmx1024m -Xms1024m"
-      network.bind_host: "127.0.0.1"
-      network.publish_host: "HOST_IP_TO_ONOS_IP"
-      cluster.name: "marscluster"
-      node.name: "es1"
+      #network.bind_host: "127.0.0.1"
+      #network.publish_host: "HOST_IP_TO_ONOS_IP"
+      #cluster.name: "marscluster"
+      #node.name: "es1"
 
 
   logstash:
