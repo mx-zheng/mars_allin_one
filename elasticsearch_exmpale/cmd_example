@@ -1,6 +1,10 @@
+https://doc.dotcms.com/docs/latest/elasticsearch-examples
+
 curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:9200/_search  -d '{"query":{"match_all":{}}}'
 curl -XDELETE http://127.0.0.1:9200/portstats
 
+curl -g -XGET 'http://127.0.0.1:9200/logstash/_search?size=3&q=plugin:cpu+collectd_type=percent+@timestamp:["2018-01-01T:00:00:00.000Z"+TO+"2018-01-02T00:00:00.000Z"]'
+ 
 curl -XGET http://127.0.0.1:9200/_cat/indices?v
 
 curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:9200/_search  --data "@/home/manager/elastic_search_cpu.json"
