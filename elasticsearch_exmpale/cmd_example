@@ -16,3 +16,8 @@ curl -XGET -H "Content-Type: application/json" http://127.0.0.1:9200/_nodes/?pre
 curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:9200/_snapshot/my_backup -d '{"type":"fs", "settings":{"location":"/mnt/backup/gotest"}}'
 
 curl -XGET http://127.0.0.1:9200/_snapshot/my_backup/_current
+
+#scroll search, not the next-stop don't have index
+#get firt request returned scroll_id to be next search
+curl -XGET -g -H "Content-Type: application/json" http://127.0.0.1:9200/logstash/_search?q=@timestamp:["2018-01-01"+TO+"2018-09-30"]'&'size=2'&'scroll=1m
+curl -XGET -g -H "Content-Type: application/json" http://127.0.0.1:9200/_search/scroll?scroll_id=DnF1ZXJ5VGhlbkZldGNoBQAAAAAABNZdFnNWOFlsU3F2UUFtV0QzZDVrUnpjSGcAAAAAAATWXhZzVjhZbFNxdlFBbVdEM2Q1a1J6Y0hnAAAAAAAE1l8Wc1Y4WWxTcXZRQW1XRDNkNWtSemNIZwAAAAAABNZgFnNWOFlsU3F2UUFtV0QzZDVrUnpjSGcAAAAAAATWYRZzVjhZbFNxdlFBbVdEM2Q1a1J6Y0hn
