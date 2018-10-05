@@ -1,16 +1,13 @@
 version: '2'
 
 services: 
-#  keepalive:
-#    image: osixia/keepalived:1.4.5
-#    container_name: keepalived
-#    environment:
-#      - KEEPALIVED_INTERFACE="enp0s3"
-#      - KEEPALIVED_VIRTUAL_IPS="192.168.1.10"
-#      - KEEPALIVED_PRIORITY =150
-#      - KEEPALIVED_UNICAST_PEERS="192.168.1.42"
-#      - KEEPALIVED_COMMAND_LINE_ARGUMENTS=""
-#    network_mode: host
+  #keepalive:
+  #  image: osixia/keepalived:1.4.5
+  #  container_name: keepalived
+  #  privileged: true
+  #  volumes:
+  #    - ./conf/keepalived/keepalived.conf:/usr/local/etc/keepalived/keepalived.conf
+  #  network_mode: host
 
   nginx:
     image: nginx:1.14.0
