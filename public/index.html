@@ -44,19 +44,45 @@
             outline-color: #3399ff;
         }
     </style>
+    <script type="text/javascript">
+        var loginaccount="";
+
+        function handleClick(event)
+        {
+          var name = document.getElementById("username").value;
+          var pass = document.getElementById("password").value;
+          loginaccount=btoa(name+":"+pass);
+          //alert("base64 is: "+ name+":"+pass+", resut:"+loginaccount);
+          UserAction();
+        }
+
+        function UserAction() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                 if (this.readyState == 4 && this.status == 200) {
+                     //alert(this.responseText);
+                     window.location.replace("https://192.168.200.66/index2.html");
+                 }
+            };
+            xhttp.open("GET", "https://192.168.200.66/mars/useraccount/v1", true);
+            //xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.setRequestHeader("Authorization", "Basic "+loginaccount);
+            xhttp.send();
+             //document.getElementById("center").innerHTML = xmlhttp.statusText + ":" + xmlhttp.status + "<BR><textarea rows='100' cols='100'>" + xmlhttp.responseText + "</textarea>";
+        }      
+    </script>    
 </head>
 <body>
 <div align="center">
-
-    <form method="post" action="mars/j_security_check">
+    <form name="myform" onSubmit="JavaScript:handleClick()">
         <table>
             <tr>
                 <td>User:</td>
-                <td><input id="username" name="j_username" type="text" autofocus/></td>
+                <td><input id="username" type="text" autofocus/></td>
             </tr>
             <tr>
                 <td>Password:</td>
-                <td><input id="password" name="j_password" type="password"/></td>
+                <td><input id="password" type="password"/></td>
             </tr>
             <tr>
                 <td colspan="2"><input id="submit" type="submit" value="Login"/></td>
