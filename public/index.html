@@ -53,6 +53,7 @@
           var pass = document.getElementById("password").value;
           loginaccount=btoa(name+":"+pass);
           //alert("base64 is: "+ name+":"+pass+", resut:"+loginaccount);
+          localStorage['mars_tmp'] = loginaccount;
           UserAction();
         }
 

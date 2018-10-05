@@ -1,5 +1,41 @@
 <html>
 <body>
+<script type="text/javascript">	
+        function handleClick(event)
+        {
+            localStorage['mars_tmp']="";        	
+            window.location.replace("https://192.168.200.66/index.html");        	
+        }
+
+        function printAccount(event)
+        {
+            alert(localStorage['mars_tmp']);
+        }
+
+        function clearCache(event)
+        {
+            localStorage['mars_tmp']="";
+        }
+
+        function getAccount(event)
+        {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                 if (this.readyState == 4 && this.status == 200) {
+                     alert(this.responseText);                     
+                 }
+            };
+            xhttp.open("GET", "https://192.168.200.66/mars/useraccount/v1", true);
+            xhttp.setRequestHeader("Authorization", "Basic "+localStorage['mars_tmp']);
+            xhttp.send();
+        }
+        
+</script>
 Macauley go go go !!!!!
+
+<button style="height:30px;width:100px" onClick="JavaScript:handleClick()">logout</button>
+<button style="height:30px;width:100px" onClick="JavaScript:printAccount()">Print Account</button>
+<button style="height:30px;width:100px" onClick="JavaScript:getAccount()">getAccount</button>
+<button style="height:30px;width:100px" onClick="JavaScript:getAccount()">clearCache</button>
 </body>
 </html>
