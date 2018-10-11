@@ -1,13 +1,13 @@
 version: '2'
 
 services: 
-  keepalive:
-    image: osixia/keepalived:1.4.5
-    container_name: keepalived
-    privileged: true
-    volumes:
-      - ./conf/keepalived/keepalived.conf:/usr/local/etc/keepalived/keepalived.conf
-    network_mode: host
+  #keepalive:
+  #  image: osixia/keepalived:1.4.5
+  #  container_name: keepalived
+  #  privileged: true
+  #  volumes:
+  #    - ./conf/keepalived/keepalived.conf:/usr/local/etc/keepalived/keepalived.conf
+  #  network_mode: host
 
   nginx:
     image: nginx:1.14.0
