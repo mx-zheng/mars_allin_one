@@ -1,0 +1,8 @@
+#!/bin/sh
+dhcp=$(netstat -tunlp|grep dhcp)
+#echo $dhcp
+if [ -n "$dhcp" ]
+then 
+  echo "has DHCP server, use service isc-dhcp-server stop"
+fi
+
