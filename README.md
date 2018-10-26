@@ -1,4 +1,11 @@
 # mars_allin_one
+
+set IP address:
+./updt_ctrl_ip 192.168.200.136
+
+set ElasticSearch
+./ setup_elasticsearch
+
 install mars in a node 
 docker-compose  operation:
 1. docker-compose -f docker-compose.yml up -d
